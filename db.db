@@ -1,0 +1,141 @@
+-- ==========================================
+-- CREAR BASE DE DATOS
+-- ==========================================
+CREATE DATABASE radiologia_citas;
+USE radiologia_citas;
+
+-- ==========================================
+-- TABLA DE EPS
+-- ==========================================
+CREATE TABLE eps (
+    id_eps INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_eps VARCHAR(100) UNIQUE NOT NULL
+);
+
+INSERT INTO eps (nombre_eps) VALUES
+('Mallamas'),
+('Nueva EPS'),
+('Sanitas'),
+('Emssanar');
+
+-- ==========================================
+-- TABLA DE ESPECIALIDADES
+-- ==========================================
+CREATE TABLE especialidades (
+    id_especialidad INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_especialidad VARCHAR(100) UNIQUE NOT NULL
+);
+
+INSERT INTO especialidades (nombre_especialidad) VALUES
+('Mamografía'),
+('Rayos X'),
+('Tomografía'),
+('Resonancia Magnética'),
+('Ecografía Convencional'),
+('Estudios Especiales'),
+('Procedimientos');
+
+-- ==========================================
+-- TABLA DE PACIENTES
+-- ==========================================
+CREATE TABLE pacientes (
+    id_documento VARCHAR(50) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE,
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    direccion TEXT,
+    id_eps INT NOT NULL,
+    FOREIGN KEY (id_eps) REFERENCES eps(id_eps)
+);
+
+-- ==========================================
+-- TABLA DE MÉDICOS
+-- ==========================================
+CREATE TABLE medicos (
+    id_medico INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    id_especialidad INT NOT NULL,
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    FOREIGN KEY (id_especialidad) REFERENCES especialidades(id_especialidad)
+);
+
+-- ==========================================
+-- TABLA DE ESTUDIOS
+-- ==========================================
+CREATE TABLE estudios (
+    id_estudio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_estudio VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    duracion_estimada INT,
+    id_especialidad INT NOT NULL,
+    FOREIGN KEY (id_especialidad) REFERENCES especialidades(id_especialidad)
+);
+
+-- ==========================================
+-- TABLA DE SALAS
+-- ==========================================
+CREATE TABLE salas (
+    id_sala INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_sala VARCHAR(50) NOT NULL,
+    tipo_equipo VARCHAR(100)
+);
+
+-- ==========================================
+-- TABLA DE CITAS
+-- ==========================================
+CREATE TABLE citas (
+    id_cita INT AUTO_INCREMENT PRIMARY KEY,
+    id_documento VARCHAR(50) NOT NULL,
+    id_medico INT NOT NULL,
+    id_estudio INT NOT NULL,
+    id_sala INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    estado ENUM('Pendiente','Confirmada','Cancelada','Completada') DEFAULT 'Pendiente',
+    observaciones TEXT,
+    FOREIGN KEY (id_documento) REFERENCES pacientes(id_documento),
+    FOREIGN KEY (id_medico) REFERENCES medicos(id_medico),
+    FOREIGN KEY (id_estudio) REFERENCES estudios(id_estudio),
+    FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
+);
+
+-- ==========================================
+-- TABLA DE USUARIOS DEL SISTEMA
+-- ==========================================
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('Administrador','Recepcionista','Medico') NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+-- ==========================================
+-- TABLA DE RECUPERACIÓN DE CONTRASEÑAS
+-- ==========================================
+CREATE TABLE password_resets (
+    id_reset INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expiracion TIMESTAMP NOT NULL,
+    usado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+-- ==========================================
+-- TABLA DE NOTIFICACIONES
+-- ==========================================
+CREATE TABLE notificaciones (
+    id_notificacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_cita INT NOT NULL,
+    tipo ENUM('Correo','SMS') NOT NULL,
+    mensaje TEXT NOT NULL,
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('Pendiente','Enviado','Error') DEFAULT 'Pendiente',
+    FOREIGN KEY (id_cita) REFERENCES citas(id_cita)
+);
