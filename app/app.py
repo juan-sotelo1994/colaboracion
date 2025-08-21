@@ -5,10 +5,12 @@ app = Flask(__name__)
 
 # resgistro de las importaciones y configuraciones 
 from frente import frente
+from auth import autenticar
 
 # Registro de blueprints
 
 app.register_blueprint(frente)
+app.register_blueprint(autenticar)
 
 
 
