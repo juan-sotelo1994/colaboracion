@@ -10,3 +10,11 @@ from datetime import datetime
 @autenticar.route('/login')
 def login():
     return render_template('login.html')
+
+@autenticar.route('/recupera')
+def recupera():
+    return render_template('/recupera1.html')
+
+@autenticar.route('/verificar')
+def verificar():
+    return render_template('recupera2.html')

@@ -10,6 +10,12 @@
   height: calc(100% - 73px);
 }
 
+.copyright {
+    color: white;
+    text-align: center; /* Centra el texto */
+    margin-bottom: 1rem;
+  }
+
 @media (max-width: 450px) {
   .h-custom {
     height: 100%;
