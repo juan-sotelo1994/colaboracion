@@ -15,10 +15,10 @@ def login():
 def recupera():
     return render_template('/recupera1.html')
 
-@autenticar.route('/verificar')
+@autenticar.route('/verificar', methods=['GET'])
 def verificar():
     return render_template('recupera2.html')
 
-@autenticar.route('/validar')
+@autenticar.route('/validar', methods=['GET'])
 def validar():
     return render_template('recupera3.html')
