@@ -6,10 +6,17 @@ from datetime import date
 from datetime import datetime
 
 
-
-@autenticar.route('/login')
+@autenticar.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        correo = request.form['correo']
+        password = request.form['password']
+
+        # Aquí validas usuario y contraseña en la BD
+        # if valido:
+        return render_template('administrador/iniciopanel.html')
+
+    return render_template("login.html")
 
 @autenticar.route('/recupera')
 def recupera():

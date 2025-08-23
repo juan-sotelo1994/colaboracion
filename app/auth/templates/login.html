@@ -33,30 +33,47 @@
             <p class="text-center fw-bold mx-3 mb-0">Or</p>
           </div>
 
+<!-- FORMULARIO DE LOGIN -->
+
           <!-- Email -->
           <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Enter a valid email address" />
-            <label class="form-label" for="form3Example3">Email address</label>
+            <input type="email" 
+                  name="correo" 
+                  id="correo" 
+                  class="form-control form-control-lg"
+                  placeholder="Correo electrónico" 
+                  required />
           </div>
 
           <!-- Password -->
-          <div class="form-outline mb-3">
-            <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="Enter password" />
-            <label class="form-label" for="form3Example4">Password</label>
+          <div class="form-outline mb-3 position-relative">
+            <input type="password" 
+                  name="password" 
+                  id="password" 
+                  class="form-control form-control-lg"
+                  placeholder="Contraseña" 
+                  required />
+            
+            <!-- Toggle password -->
+            <span toggle="#password" 
+                  class="eye toggle-password" 
+                  style="position: absolute; right: 15px; top: 12px; cursor: pointer;">
+              <i class="fa fa-eye-slash" aria-hidden="true"></i>
+            </span>
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
-            <a href="{{url_for('autenticar.recupera')}}" class="text-body">Forgot password?</a>
+            <a href="{{url_for('autenticar.recupera')}}" class="text-body">¿Olvidaste tu contraseña?</a>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-primary btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-            
+            <!-- Botón que envía el formulario -->
+            <button type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">
+              Login
+            </button>
           </div>
-
+          
         </form>
       </div>
     </div>
