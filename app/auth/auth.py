@@ -18,3 +18,7 @@ def recupera():
 @autenticar.route('/verificar')
 def verificar():
     return render_template('recupera2.html')
+
+@autenticar.route('/validar')
+def validar():
+    return render_template('recupera3.html')

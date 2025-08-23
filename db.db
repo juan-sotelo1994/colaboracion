@@ -1,6 +1,4 @@
--- ==========================================
--- CREAR BASE DE DATOS
--- ==========================================
+
 CREATE DATABASE radiologia_citas;
 USE radiologia_citas;
 
